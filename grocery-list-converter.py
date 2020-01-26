@@ -2,6 +2,7 @@ import pandas as pd
 
 grocery_store_inventory = pd.read_excel('grocery-store-items.xlsx')
 
+#Make all items and locations in grocey_store_inventory lowercase to ease string comparison
 for cols in grocery_store_inventory.columns:
     try:
         grocery_store_inventory[cols] = grocery_store_inventory[cols].str.lower()
