@@ -1,29 +1,8 @@
-produce_list = ['green pepper',
-                'red pepper',
-                'yellow pepper',
-                'white onion',
-                'yellow onion',
-                'green onion',
-                'brussel sprouts',
-                'green beans',
-                'avocados']
+import pandas as pd
 
-fruit_list = ['strawberries',
-              'blueberries',
-              'raspberries',
-              'black berries',
-              'bananas',
-              'kiwis',
-              'tomatoes',
-              'apples',
-              ]
+grocery_store_inventory = pd.read_excel('grocery-store-items.xlsx')
 
-dairy_list = []
+grocery_list = []
 
-meat_dept_list = []
-
-baking_list = []
-
-beverage_list = []
-
-products_dict = {'Produce': produce_list}
+for item in grocery_store_inventory['Item']:
+    print(item)
