@@ -30,16 +30,27 @@ for location in locations_list:
 location_dic.update({'other': []})
 
 len_list = len(grocery_list)
-count = 1
-for item in grocery_list_df['List_Item']:
+
+for grocery_item in grocery_list_df['List_Item']:
+    inventory_index = 0
+    ind_item_loc = []
+    for inventory_item in grocery_store_inventory['Item']:
+        if grocery_item in inventory_item:
+            location = grocery_store_inventory['Location'][inventory_index]
+            ind_item_loc.append(location)
+        inventory_index += 1
     try:
-        i = grocery_store_inventory.loc[grocery_store_inventory['Item'] == item]
-        location_dic[grocery_store_inventory['Location'][i.index[0]]].append(item)
-        print('Added', item, ':',  count, 'of', len_list, 'to shopping list')
-        count += 1
-    except (ValueError, IndexError):
-        location_dic['other'].append(item)
-        print('Added', item, ":", count, 'of', len_list, 'to shopping list')
-        count += 1
+        if len(ind_item_loc) == 0:
+            print('Found no matches for ' + grocery_item + '. Please choose a location or other.')
+            location_choice = input('Location choice: ')
+            location_dic[location_choice].append(grocery_item)
+        elif len(ind_item_loc) > 1:
+            print('Found multiple locations for ' + grocery_item + '. Choose one: ' + str(ind_item_loc) + '.')
+            location_choice = input('Location choice: ')
+            location_dic[location_choice].append(grocery_item)
+        else:
+            location_dic[location].append(grocery_item)
+    except KeyError:
+        pass
 
 print(location_dic)
